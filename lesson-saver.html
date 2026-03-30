@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson Saver 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent1: #e94560;
+    --accent2: #f5a623;
+    --accent3: #0f9b8e;
+    --accent4: #7c5cbf;
+    --card-bg: #16213e;
+    --text: #eaeaea;
+    --soft: #a0a8c0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 20% 50%, rgba(233,69,96,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(124,92,191,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(15,155,142,0.08) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  @keyframes bgPulse {
+    0% { transform: translate(0,0) rotate(0deg); }
+    100% { transform: translate(2%,2%) rotate(1deg); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: slideDown 0.6s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo {
+    font-size: 48px;
+    margin-bottom: 8px;
+    display: block;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    color: var(--soft);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 4px;
+    margin-bottom: 24px;
+    gap: 4px;
+    animation: slideUp 0.6s ease 0.2s both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--soft);
+  }
+
+  .tab.active { color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  .tab.young.active { background: linear-gradient(135deg, var(--accent3), #0a7a6e); }
+  .tab.old.active { background: linear-gradient(135deg, var(--accent4), #5a3d9e); }
+
+  .panel { display: none; animation: fadeIn 0.4s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .young-label { color: var(--accent3); }
+  .old-label { color: var(--accent4); }
+
+  .question-display {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .question-display::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .panel.young .question-display::before { background: linear-gradient(90deg, var(--accent3), var(--accent2)); }
+  .panel.old .question-display::before { background: linear-gradient(90deg, var(--accent4), var(--accent1)); }
+
+  .question-text {
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.5;
+    color: white;
+  }
+
+  .question-text.placeholder {
+    color: var(--soft);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .emoji-display {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .btn-main {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+  .btn-main:active { transform: translateY(0); }
+
+  .young .btn-random { background: linear-gradient(135deg, var(--accent3), #0a7a6e); color: white; }
+  .old .btn-random { background: linear-gradient(135deg, var(--accent4), #5a3d9e); color: white; }
+
+  .categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .btn-cat {
+    padding: 12px 8px;
+    border: 2px solid;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s ease;
+  }
+
+  .young .btn-cat { border-color: rgba(15,155,142,0.4); color: var(--soft); }
+  .young .btn-cat:hover, .young .btn-cat.selected {
+    background: rgba(15,155,142,0.2);
+    border-color: var(--accent3);
+    color: white;
+  }
+
+  .old .btn-cat { border-color: rgba(124,92,191,0.4); color: var(--soft); }
+  .old .btn-cat:hover, .old .btn-cat.selected {
+    background: rgba(124,92,191,0.2);
+    border-color: var(--accent4);
+    color: white;
+  }
+
+  .timer-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+
+  .timer-label { font-size: 13px; color: var(--soft); font-weight: 600; flex: 1; }
+
+  .timer-display {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent2);
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .btn-timer {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(245,166,35,0.2);
+    color: var(--accent2);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-timer:hover { background: rgba(245,166,35,0.35); }
+
+  .choices-grid { display: grid; gap: 10px; margin-bottom: 16px; }
+
+  .choice-card {
+    background: var(--card-bg);
+    border: 2px solid rgba(124,92,191,0.3);
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .choice-card:hover { border-color: var(--accent4); background: rgba(124,92,191,0.1); transform: translateX(4px); }
+  .choice-icon { font-size: 24px; }
+  .choice-text { font-size: 15px; font-weight: 700; color: var(--text); }
+  .choice-sub { font-size: 12px; color: var(--soft); margin-top: 2px; }
+
+  .counter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 4px;
+  }
+
+  .counter-text { font-size: 13px; color: var(--soft); }
+  .counter-num { font-size: 13px; font-weight: 800; color: var(--accent2); }
+
+  .sep { height: 1px; background: rgba(255,255,255,0.06); margin: 16px 0; }
+
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-bottom: 24px;
+  }
+
+  .footer-copy {
+    display: inline-block;
+    background: rgba(233,69,96,0.1);
+    border: 1px solid rgba(233,69,96,0.3);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: var(--soft);
+  }
+
+  .footer-copy span { color: var(--accent1); font-weight: 800; }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  .question-display.new { animation: pulse 0.3s ease; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <span class="logo">🚀</span>
+    <h1>Lesson Saver</h1>
+    <p class="subtitle">When you feel you've lost them — open this</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab young active" onclick="switchTab('young')">🎈 Young (6–10)</button>
+    <button class="tab old" onclick="switchTab('old')">🎓 Older (11+)</button>
+  </div>
+
+  <!-- YOUNG PANEL -->
+  <div class="panel young active" id="panel-young">
+    <p class="section-label young-label">⚡ Question to grab their attention</p>
+
+    <div class="question-display" id="young-card">
+      <div>
+        <span class="emoji-display" id="young-emoji">✨</span>
+        <p class="question-text placeholder" id="young-question">Press the button to get a random question!</p>
+      </div>
+    </div>
+
+    <div class="counter-row">
+      <span class="counter-text">Available questions</span>
+      <span class="counter-num" id="young-count">0</span>
+    </div>
+
+    <div class="categories" id="young-cats"></div>
+
+    <button class="btn-main btn-random" onclick="randomQuestion('young')">
+      🎲 Random Question!
+    </button>
+
+    <div class="timer-row">
+      <span class="timer-label">⏱ Thinking time</span>
+      <span class="timer-display" id="young-timer">30</span>
+      <button class="btn-timer" id="young-timer-btn" onclick="toggleTimer('young')">Start</button>
+    </div>
+  </div>
+
+  <!-- OLD PANEL -->
+  <div class="panel old" id="panel-old">
+    <p class="section-label old-label">🎯 Give them a sense of choice</p>
+
+    <div class="choices-grid" id="choices-grid"></div>
+
+    <div class="sep"></div>
+
+    <p class="section-label old-label" style="margin-top:8px">💬 Quick opinion questions</p>
+
+    <div class="question-display" id="old-card">
+      <div>
+        <span class="emoji-display" id="old-emoji">🤔</span>
+        <p class="question-text placeholder" id="old-question">Press the button to get a quick opinion question</p>
+      </div>
+    </div>
+
+    <button class="btn-main btn-random" style="background: linear-gradient(135deg, #7c5cbf, #5a3d9e); color:white;" onclick="randomQuestion('old')">
+      💬 Random Opinion Question
+    </button>
+
+    <div class="timer-row">
+      <span class="timer-label">⏱ Response time</span>
+      <span class="timer-display" id="old-timer">20</span>
+      <button class="btn-timer" id="old-timer-btn" onclick="toggleTimer('old')">Start</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-copy">
+      © 2025 <span>Mona Eraky</span> — All Rights Reserved
+    </div>
+  </div>
+</div>
+
+<script>
+const data = {
+  young: {
+    categories: {
+      "🌍 Daily Life": [
+        { q: "What did you do last weekend?", e: "🎉" },
+        { q: "What did you have for breakfast today?", e: "🍳" },
+        { q: "Do you help at home? What do you do?", e: "🏠" },
+        { q: "What was the last game you played with friends?", e: "⚽" },
+        { q: "If you had a free day, what would you do?", e: "🌈" },
+        { q: "What is the best thing that happened to you this week?", e: "⭐" },
+        { q: "What is your favourite thing to do after school?", e: "🎮" },
+        { q: "If you could visit any country, where would you go?", e: "✈️" },
+        { q: "What is something you are really good at?", e: "🏆" },
+        { q: "What makes you laugh the most?", e: "😂" },
+      ],
+      "🌿 Values & Character": [
+        { q: "What is one thing you are grateful for today?", e: "🌟" },
+        { q: "Who is someone you look up to and why?", e: "💚" },
+        { q: "What does being kind mean to you?", e: "💛" },
+        { q: "If you could help someone today, what would you do?", e: "🤝" },
+        { q: "What is something that makes you feel calm and peaceful?", e: "✨" },
+        { q: "If you could send a message to the world, what would it say?", e: "🌍" },
+        { q: "What is the most important thing your family taught you?", e: "👨‍👩‍👧" },
+        { q: "What does honesty mean to you? Can you share an example?", e: "🪞" },
+        { q: "What would you do if you saw someone being treated unfairly?", e: "⚖️" },
+        { q: "What is one habit you think everyone should have?", e: "🌱" },
+      ],
+      "🌈 Imaginative": [
+        { q: "If you had a magic wand, what would you change at school?", e: "🪄" },
+        { q: "If you could fly, where would you go first?", e: "🦅" },
+        { q: "If you could have any animal as a pet, what would you choose?", e: "🦁" },
+        { q: "If you were the teacher today, what would you teach?", e: "👨‍🏫" },
+        { q: "If you invented something to help people, what would it be?", e: "🚀" },
+        { q: "If you could talk to any animal, what would you ask?", e: "🐬" },
+        { q: "If you were a superhero, what would your power be?", e: "🦸" },
+        { q: "If you could live in any time period, when would it be?", e: "⏳" },
+        { q: "If you could design your perfect classroom, what would it look like?", e: "🏫" },
+        { q: "If money was no object, what would you do for fun?", e: "💫" },
+      ],
+      "😄 Fun & Funny": [
+        { q: "What is the funniest thing that ever happened to you?", e: "😂" },
+        { q: "If you were a food, what would you be?", e: "🍕" },
+        { q: "If you could rename yourself, what name would you pick?", e: "🎭" },
+        { q: "What cartoon character are you most like?", e: "🎬" },
+        { q: "If you could swap lives with anyone for a day, who would it be?", e: "🔄" },
+        { q: "What is the silliest dream you have ever had?", e: "💤" },
+        { q: "If your pet could talk, what would it say about you?", e: "🐾" },
+      ]
+    }
+  },
+  old: {
+    choices: [
+      { icon: "📖", text: "Vote on where to start", sub: "Examples first or explanation first?", color: "#7c5cbf" },
+      { icon: "🗳️", text: "Vote on the topic", sub: "What do you most want to discuss today?", color: "#e94560" },
+      { icon: "✍️", text: "Write your question", sub: "Type one question that's on your mind in the chat", color: "#0f9b8e" },
+      { icon: "⏸️", text: "One minute of thinking", sub: "Everyone reflects silently, then we share", color: "#f5a623" },
+    ],
+    opinions: [
+      { q: "If there was no school today, what would you be doing right now?", e: "🤔" },
+      { q: "In your opinion, is online learning harder or easier? Why?", e: "💭" },
+      { q: "What is one thing you wish was different about how we learn?", e: "🔄" },
+      { q: "If you were the teacher, how would you make online lessons better?", e: "💡" },
+      { q: "What is something you learned this week outside of school?", e: "🌱" },
+      { q: "What talent do you have that nobody in class knows about?", e: "⭐" },
+      { q: "If you could change one subject on your timetable, what would it be?", e: "📚" },
+      { q: "What is one thing that motivates you to keep going when things get hard?", e: "💪" },
+      { q: "If you could learn anything in the world, what would you choose?", e: "🌍" },
+      { q: "What does your ideal future look like in 10 years?", e: "🔭" },
+      { q: "What is something you think adults misunderstand about students?", e: "🧠" },
+      { q: "If you could fix one problem in the world, what would it be?", e: "🌟" },
+      { q: "What is one piece of advice you would give to a younger student?", e: "📝" },
+      { q: "What does success mean to you personally?", e: "🏆" },
+    ]
+  }
+};
+
+let youngSelected = null;
+let youngUsed = [];
+let oldUsed = [];
+let timers = { young: null, old: null };
+let timerVals = { young: 30, old: 20 };
+let timerRunning = { young: false, old: false };
+
+function init() {
+  buildYoungCats();
+  buildChoices();
+  updateYoungCount();
+}
+
+function buildYoungCats() {
+  const container = document.getElementById('young-cats');
+  container.innerHTML = '';
+  Object.keys(data.young.categories).forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-cat';
+    btn.textContent = cat;
+    btn.onclick = () => selectCat(cat, btn);
+    container.appendChild(btn);
+  });
+}
+
+function selectCat(cat, btn) {
+  youngSelected = youngSelected === cat ? null : cat;
+  document.querySelectorAll('.young .btn-cat').forEach(b => b.classList.remove('selected'));
+  if (youngSelected) btn.classList.add('selected');
+  updateYoungCount();
+}
+
+function updateYoungCount() {
+  let count = 0;
+  if (youngSelected) {
+    count = data.young.categories[youngSelected].length;
+  } else {
+    Object.values(data.young.categories).forEach(arr => count += arr.length);
+  }
+  document.getElementById('young-count').textContent = count;
+}
+
+function buildChoices() {
+  const grid = document.getElementById('choices-grid');
+  grid.innerHTML = '';
+  data.old.choices.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'choice-card';
+    card.innerHTML = `
+      <span class="choice-icon">${c.icon}</span>
+      <div>
+        <div class="choice-text">${c.text}</div>
+        <div class="choice-sub">${c.sub}</div>
+      </div>
+    `;
+    card.style.borderColor = c.color + '55';
+    card.onmouseenter = () => card.style.borderColor = c.color;
+    card.onmouseleave = () => card.style.borderColor = c.color + '55';
+    card.onclick = () => {
+      card.style.background = c.color + '30';
+      setTimeout(() => card.style.background = '', 500);
+    };
+    grid.appendChild(card);
+  });
+}
+
+function randomQuestion(group) {
+  if (group === 'young') {
+    let pool = [];
+    if (youngSelected) {
+      pool = data.young.categories[youngSelected];
+    } else {
+      Object.values(data.young.categories).forEach(arr => pool = pool.concat(arr));
+    }
+    if (pool.length === 0) return;
+    if (youngUsed.length >= pool.length) youngUsed = [];
+    let available = pool.filter((_, i) => !youngUsed.includes(i));
+    const idx = Math.floor(Math.random() * available.length);
+    const item = available[idx];
+    youngUsed.push(pool.indexOf(item));
+
+    const card = document.getElementById('young-card');
+    card.classList.remove('new');
+    void card.offsetWidth;
+    card.classList.add('new');
+    document.getElementById('young-emoji').textContent = item.e;
+    const q = document.getElementById('young-question');
+    q.textContent = item.q;
+    q.classList.remove('placeholder');
+  } else {
+    const pool = data.old.opinions;
+    if (oldUsed.length >= pool.length) oldUsed = [];
+    let available = pool.filter((_, i) => !oldUsed.includes(i));
+    const idx = Math.floor(Math.random() * available.length);
+    const item = available[idx];
+    oldUsed.push(pool.indexOf(item));
+
+    const card = document.getElementById('old-card');
+    card.classList.remove('new');
+    void card.offsetWidth;
+    card.classList.add('new');
+    document.getElementById('old-emoji').textContent = item.e;
+    const q = document.getElementById('old-question');
+    q.textContent = item.q;
+    q.classList.remove('placeholder');
+  }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab.${tab}`).classList.add('active');
+  document.getElementById(`panel-${tab}`).classList.add('active');
+}
+
+function toggleTimer(group) {
+  const btn = document.getElementById(`${group}-timer-btn`);
+  const display = document.getElementById(`${group}-timer`);
+  const defaultVal = group === 'young' ? 30 : 20;
+
+  if (timerRunning[group]) {
+    clearInterval(timers[group]);
+    timerRunning[group] = false;
+    timerVals[group] = defaultVal;
+    display.textContent = defaultVal;
+    display.style.color = 'var(--accent2)';
+    btn.textContent = 'Start';
+  } else {
+    timerRunning[group] = true;
+    btn.textContent = 'Stop';
+    timers[group] = setInterval(() => {
+      timerVals[group]--;
+      display.textContent = timerVals[group];
+      if (timerVals[group] <= 5) display.style.color = 'var(--accent1)';
+      if (timerVals[group] <= 0) {
+        clearInterval(timers[group]);
+        timerRunning[group] = false;
+        timerVals[group] = defaultVal;
+        display.textContent = '⏰';
+        btn.textContent = 'Start';
+        setTimeout(() => {
+          display.textContent = defaultVal;
+          display.style.color = 'var(--accent2)';
+        }, 2000);
+      }
+    }, 1000);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
